@@ -276,14 +276,6 @@ def install_server():
     remove_path(cm_link)
     cm_link.symlink_to(CM_DIR)
 
-    log("Creating ac-bop results directory...")
-
-    results_dir = SERVER_DIR / "results"
-    results_dir.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
     ac_server = SERVER_DIR / "acServer"
     ac_server.chmod(
         ac_server.stat().st_mode | 0o111
