@@ -18,10 +18,10 @@ It manages:
 /opt/assetto-deploy/
 ├── config.json
 ├── deploy.py
-├── content\_manager.py
+├── content_manager.py
 └── utils.py
 
-/usr/local/bin/deploy\_assetto
+/usr/local/bin/deploy_assetto
 ```
 
 ## Installation
@@ -37,15 +37,15 @@ Copy these files into it:
 ```text
 config.json
 deploy.py
-content\_manager.py
+content_manager.py
 utils.py
 ```
 
 Install the launcher:
 
 ```bash
-sudo cp deploy\_assetto /usr/local/bin/deploy\_assetto
-sudo chmod 755 /usr/local/bin/deploy\_assetto
+sudo cp deploy\_assetto /usr/local/bin/deploy_assetto
+sudo chmod 755 /usr/local/bin/deploy_assetto
 ```
 
 Make the Python script executable:
@@ -59,7 +59,7 @@ Check Python syntax:
 ```bash
 sudo python3 -m py\_compile \\
   /opt/assetto-deploy/deploy.py \\
-  /opt/assetto-deploy/content\_manager.py \\
+  /opt/assetto-deploy/content_manager.py \\
   /opt/assetto-deploy/utils.py
 ```
 
@@ -77,20 +77,20 @@ The default configuration included with this project is:
 
 ```json
 {
-  "upload\_dir": "/opt/assetto/upload",
-  "server\_dir": "/opt/assetto/assetto",
-  "shared\_dir": "/opt/assetto/assetto\_shared",
-  "temp\_dir": "/tmp/assetto\_deploy",
-  "backup\_dir": "/tmp/assetto\_backup",
-  "content\_backup": "/tmp/assetto\_content.json.backup",
-  "assetto\_service": "assetto",
-  "content\_service": "assetto-content",
-  "bop\_service": "acbop",
-  "assetto\_user": "assetto",
-  "assetto\_group": "assetto",
-  "udp\_plugin\_address": "127.0.0.1:12000",
-  "udp\_plugin\_local\_port": "11000",
-  "content\_base\_url": "http://IP:8051"
+  "upload_dir": "/opt/assetto/upload",
+  "server_dir": "/opt/assetto/assetto",
+  "shared_dir": "/opt/assetto/assetto_shared",
+  "temp_dir": "/tmp/assetto_deploy",
+  "backup_dir": "/tmp/assetto_backup",
+  "content_backup": "/tmp/assetto_content.json.backup",
+  "assetto_service": "assetto",
+  "content_service": "assetto-content",
+  "bop_service": "acbop",
+  "assetto_user": "assetto",
+  "assetto_group": "assetto",
+  "udp_plugin_address": "127.0.0.1:12000",
+  "udp_plugin_local_port": "11000",
+  "content_base_url": "http://IP:8051"
 }
 ```
 
@@ -99,7 +99,7 @@ The default configuration included with this project is:
 The Content Manager URL is controlled by one setting:
 
 ```json
-"content\_base\_url": "http://1IP:8051"
+"content_base_url": "http://1IP:8051"
 ```
 
 For the current direct HTTP setup, leave it as above.
@@ -107,7 +107,7 @@ For the current direct HTTP setup, leave it as above.
 If HTTPS is added later through a reverse proxy, only change this value, for example:
 
 ```json
-"content\_base\_url": "https://content.example.com"
+"content_base_url": "https://content.example.com"
 ```
 
 No Python code needs to be changed.
@@ -117,13 +117,13 @@ No Python code needs to be changed.
 Car packages:
 
 ```text
-/opt/assetto/assetto\_shared/packages/cars
+/opt/assetto/assetto_shared/packages/cars
 ```
 
 Track packages:
 
 ```text
-/opt/assetto/assetto\_shared/packages/tracks
+/opt/assetto/assetto_shared/packages/tracks
 ```
 
 Supported package formats:
@@ -145,30 +145,30 @@ Additional text, version information, or package version suffixes may follow the
 Examples for car ID:
 
 ```text
-R3\_Suzuki\_Swift
+R3_Suzuki_Swift
 ```
 
 Valid package names include:
 
 ```text
-R3\_Suzuki\_Swift.zip
-car-R3\_Suzuki\_Swift.zip
-car-R3\_Suzuki\_Swift-1.0.zip
-car-R3\_Suzuki\_Swift-Rally R3 by GR.TEAM 1.0-2.zip
+R3_Suzuki_Swift.zip
+car-R3_Suzuki_Swift.zip
+car-R3_Suzuki_Swift-1.0.zip
+car-R3_Suzuki_Swift-Rally R3 by GR.TEAM 1.0-2.zip
 ```
 
 Examples for track ID:
 
 ```text
-rt\_california\_highway
+rt_california_highway
 ```
 
 Valid package names include:
 
 ```text
-rt\_california\_highway.7z
-track-rt\_california\_highway.7z
-track-rt\_california\_highway-1.1.7z
+rt_california_highway.7z
+track-rt_california_highway.7z
+track-rt_california_highway-1.1.7z
 ```
 
 If several files match the same content ID, the newest file by modification time is used.
@@ -178,7 +178,7 @@ If several files match the same content ID, the newest file by modification time
 The generated file is:
 
 ```text
-/opt/assetto/assetto\_shared/cm\_content/content.json
+/opt/assetto/assetto_shared/cm_content/content.json
 ```
 
 It is rebuilt from scratch on every successful deployment.
@@ -190,12 +190,12 @@ For example:
 ```json
 {
   "cars": {
-    "R3\_Suzuki\_Swift": {
-      "url": "http://146.59.105.73:8051/cars/car-R3\_Suzuki\_Swift-Rally%20R3%20by%20GR.TEAM%201.0-2.zip"
+    "R3_Suzuki_Swift": {
+      "url": "http://146.59.105.73:8051/cars/car-R3_Suzuki_Swift-Rally%20R3%20by%20GR.TEAM%201.0-2.zip"
     }
   },
   "track": {
-    "url": "http://146.59.105.73:8051/tracks/track-chq\_sepang.zip"
+    "url": "http://146.59.105.73:8051/tracks/track-chq_sepang.zip"
   }
 }
 ```
@@ -211,8 +211,8 @@ Missing packages do not abort deployment.
 The script prints a warning such as:
 
 ```text
-WARNING: No download package found for car: mercedes\_sls\_gt3
-WARNING: No download package found for track: ks\_silverstone
+WARNING: No download package found for car: mercedes_sls_gt3
+WARNING: No download package found for track: ks_silverstone
 ```
 
 At the end of Content Manager generation it also prints a summary of found and missing packages.
@@ -222,14 +222,14 @@ At the end of Content Manager generation it also prints a summary of found and m
 Every deployment automatically configures these settings inside the `\[SERVER]` section of:
 
 ```text
-/opt/assetto/assetto/cfg/server\_cfg.ini
+/opt/assetto/assetto/cfg/server_cfg.ini
 ```
 
 Values:
 
 ```ini
-UDP\_PLUGIN\_ADDRESS=127.0.0.1:12000
-UDP\_PLUGIN\_LOCAL\_PORT=11000
+UDP_PLUGIN_ADDRESS=127.0.0.1:12000
+UDP_PLUGIN_LOCAL_PORT=11000
 ```
 
 If the lines already exist, they are replaced.
@@ -279,7 +279,7 @@ If deployment fails after the live server has been changed, the previous server 
 Usage remains unchanged:
 
 ```bash
-sudo deploy\_assetto /opt/assetto/upload/server.tar.gz
+sudo deploy_assetto /opt/assetto/upload/server.tar.gz
 ```
 
 The launcher passes the archive name to the Python deployment application.
@@ -289,14 +289,14 @@ The launcher passes the archive name to the Python deployment application.
 Check generated Content Manager configuration:
 
 ```bash
-cat /opt/assetto/assetto\_shared/cm\_content/content.json
+cat /opt/assetto/assetto_shared/cm_content/content.json
 ```
 
 Check acbop configuration:
 
 ```bash
-grep -E '^UDP\_PLUGIN\_' \\
-  /opt/assetto/assetto/cfg/server\_cfg.ini
+grep -E '^UDP_PLUGIN_' \\
+  /opt/assetto/assetto/cfg/server_cfg.ini
 ```
 
 Check all services:
@@ -328,7 +328,7 @@ When a reverse proxy is configured in front of the content server, edit:
 Change only:
 
 ```json
-"content\_base\_url": "https://content.example.com"
+"content_base_url": "https://content.example.com"
 ```
 
 The rest of the deployment system does not need to change.
