@@ -1,0 +1,16 @@
+{
+  "upload_dir": "",
+  "server_dir": "",
+  "shared_dir": "",
+  "temp_dir": "",
+  "backup_dir": "",
+  "content_backup": "",
+  "assetto_service": "",
+  "content_service": "",
+  "bop_service": "", # https://github.com/P1-Ro/ac-bop
+  "assetto_user": "",
+  "assetto_group": "",
+  "udp_plugin_address": "127.0.0.1:12000",
+  "udp_plugin_local_port": "11000",
+  "content_base_url": "http://IP:8051"
+}
