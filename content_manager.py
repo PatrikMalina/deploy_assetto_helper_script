@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import json
+import shutil
 from pathlib import Path
 from urllib.parse import quote
 
@@ -41,23 +42,101 @@ def package_stem(filename):
     return None
 
 
+def is_supported_package(path):
+    return any(
+        path.name.lower().endswith(extension)
+        for extension in SUPPORTED_PACKAGE_EXTENSIONS
+    )
+
+
+def import_packaged_content(
+    source_cm_dir,
+    car_packages,
+    track_packages,
+    assetto_user,
+    assetto_group,
+):
+    """
+    Import car-* and track-* archives from the deployed server package:
+
+        cfg/cm_content/
+
+    into the persistent shared package directories.
+    """
+
+    source_cm_dir = Path(source_cm_dir)
+    car_packages = Path(car_packages)
+    track_packages = Path(track_packages)
+
+    if not source_cm_dir.is_dir():
+        log("No packaged cfg/cm_content directory found.")
+        return
+
+    log("")
+    log("Importing packaged Content Manager downloads...")
+
+    car_packages.mkdir(parents=True, exist_ok=True)
+    track_packages.mkdir(parents=True, exist_ok=True)
+
+    imported_cars = 0
+    imported_tracks = 0
+
+    for source in source_cm_dir.iterdir():
+        if not source.is_file():
+            continue
+
+        if not is_supported_package(source):
+            continue
+
+        name_lower = source.name.lower()
+
+        if name_lower.startswith("car-"):
+            destination = car_packages / source.name
+
+            log(f"Importing car package: {source.name}")
+
+            shutil.copy2(
+                source,
+                destination,
+            )
+
+            imported_cars += 1
+
+        elif name_lower.startswith("track-"):
+            destination = track_packages / source.name
+
+            log(f"Importing track package: {source.name}")
+
+            shutil.copy2(
+                source,
+                destination,
+            )
+
+            imported_tracks += 1
+
+    chown_recursive(
+        car_packages,
+        assetto_user,
+        assetto_group,
+    )
+
+    chown_recursive(
+        track_packages,
+        assetto_user,
+        assetto_group,
+    )
+
+    log(
+        f"Imported car packages: {imported_cars}"
+    )
+    log(
+        f"Imported track packages: {imported_tracks}"
+    )
+
+
 def find_package(directory, content_id, package_type):
-    """
-    Supported examples:
-
-    R3_Suzuki_Swift.zip
-    car-R3_Suzuki_Swift.zip
-    car-R3_Suzuki_Swift-1.0.zip
-    car-R3_Suzuki_Swift-Rally R3 by GR.TEAM 1.0-2.zip
-
-    ks_silverstone.7z
-    track-ks_silverstone.rar
-    track-ks_silverstone-1.1.zip
-
-    If multiple matching files exist, the newest file is selected.
-    """
-
     directory = Path(directory)
+
     prefix = f"{package_type}-"
     matches = []
 
@@ -91,6 +170,7 @@ def find_package(directory, content_id, package_type):
 
         if candidate_lower.startswith(id_lower + " "):
             matches.append(path)
+            continue
 
     if not matches:
         return None
@@ -131,11 +211,6 @@ def update_content_manager(
     assetto_user,
     assetto_group,
 ):
-    """
-    Rebuild content.json from scratch using only the cars and track
-    from the newly deployed server.
-    """
-
     log("")
     log("Updating Content Manager downloads...")
 
@@ -230,7 +305,9 @@ def update_content_manager(
         encoding="utf-8",
     )
 
-    temporary_json.replace(content_json)
+    temporary_json.replace(
+        content_json
+    )
 
     chown_recursive(
         content_json,
