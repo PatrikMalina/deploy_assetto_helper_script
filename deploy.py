@@ -254,6 +254,20 @@ def install_server():
         SERVER_DIR,
     )
 
+    source_cm_dir = (
+        SERVER_DIR
+        / "cfg"
+        / "cm_content"
+    )
+    
+    import_packaged_content(
+        source_cm_dir=source_cm_dir,
+        car_packages=CAR_PACKAGES,
+        track_packages=TRACK_PACKAGES,
+        assetto_user=ASSETTO_USER,
+        assetto_group=ASSETTO_GROUP,
+    )
+
     server_cfg = (
         SERVER_DIR
         / "cfg"
