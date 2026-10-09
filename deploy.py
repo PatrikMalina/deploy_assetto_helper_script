@@ -9,7 +9,10 @@ import time
 import zipfile
 from pathlib import Path
 
-from content_manager import update_content_manager
+from content_manager import (
+    import_packaged_content,
+    update_content_manager,
+)
 from utils import (
     chown_recursive,
     clear_directory,
