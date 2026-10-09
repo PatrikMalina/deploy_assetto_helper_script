@@ -1,6 +1,6 @@
 # Assetto Corsa Server Deployment
 
-This project replaces the large `deploy\_assetto` Bash script with a small Bash launcher and modular Python code.
+This project replaces the large `deploy_assetto` Bash script with a small Bash launcher and modular Python code.
 
 It manages:
 
@@ -44,7 +44,7 @@ utils.py
 Install the launcher:
 
 ```bash
-sudo cp deploy\_assetto /usr/local/bin/deploy_assetto
+sudo cp deploy_assetto /usr/local/bin/deploy_assetto
 sudo chmod 755 /usr/local/bin/deploy_assetto
 ```
 
@@ -57,7 +57,7 @@ sudo chmod 755 /opt/assetto-deploy/deploy.py
 Check Python syntax:
 
 ```bash
-sudo python3 -m py\_compile \\
+sudo python3 -m py_compile \\
   /opt/assetto-deploy/deploy.py \\
   /opt/assetto-deploy/content_manager.py \\
   /opt/assetto-deploy/utils.py
